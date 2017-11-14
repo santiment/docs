@@ -1,0 +1,34 @@
+podTemplate(label: 'node-builder', containers: [
+  containerTemplate(name: 'docker', image: 'docker', ttyEnabled: true, command: 'cat', envVars: [
+    envVar(key: 'DOCKER_HOST', value: 'tcp://docker-host-docker-host:2375')
+  ])
+]) {
+  node('node-builder') {
+    stage('Run Tests') {
+      container('docker') {
+        def scmVars = checkout scm
+
+        sh "docker build -t node-app-test:${env.BRANCH_NAME} -f Dockerfile-test ."
+        sh "docker run --rm -t node-app-test:${env.BRANCH_NAME}"
+
+        if (env.BRANCH_NAME == "master") {
+          withCredentials([
+            string(
+              credentialsId: 'aws_account_id',
+              variable: 'aws_account_id'
+            )
+          ]) {
+
+            def awsRegistry = "${env.aws_account_id}.dkr.ecr.eu-central-1.amazonaws.com"
+            docker.withRegistry("https://${awsRegistry}", "ecr:eu-central-1:ecr-credentials") {
+              sh "docker build -t ${awsRegistry}/node-app:${env.BRANCH_NAME} -t ${awsRegistry}/node-app:${scmVars.GIT_COMMIT} ."
+              sh "docker push ${awsRegistry}/node-app:${env.BRANCH_NAME}"
+              sh "docker push ${awsRegistry}/node-app:${scmVars.GIT_COMMIT}"
+            }
+
+          }
+        }
+      }
+    }
+  }
+}

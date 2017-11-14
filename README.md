@@ -14,6 +14,10 @@ The santiment platform is language and data storage agnostic. You can develop ba
 * __Buildable in jenkins__ - Each service shold provide a `Jenkinsfile` file, which describes how the project build is done. The build should run unit tests on the code and make sure all automatic checks are passing and if they do, build a docker image and push it to a central registry. You can see an example `Jenkinsfile` here: https://github.com/santiment/sanbase2/blob/master/Jenkinsfile
 * __STDOUT logging__ - Each service should be logging on the standard output, so that the platform can capture the logs and forward them to a standard log collection service
 
+### Example NodeJS application
+
+You can find an example NodeJS application in [js-api-template](js-api-template)
+
 ## Frontend
 
 In santiment we are currently endorsing the React JS framework for building modular UI components. The components should follow certain conventions, so that they play nice with the rest of the UI:
