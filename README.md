@@ -7,7 +7,7 @@ This repository contains documentation of how apps for the santiment platform sh
 The santiment platform is language and data storage agnostic. You can develop backend services in any language, using any data storage, but you need to conform to certain conventions:
 
 * __Dockerized__ - Each service should contain a `Dockerfile` in its root folder, which builds a docker image that will allow to run the service. You can see an example `Dockerfile` here: https://github.com/santiment/sanbase2/blob/master/Dockerfile
-* __Config through ENV__ - Each service should be configurable using ENV variables. ENV variables is the way we are configuring the apps when we run them in our infrastructure. Here is an example how all the paramters are moved in ENV variables: https://github.com/santiment/sanbase2/blob/master/config/prod.exs#L71
+* __Config through ENV__ - Each service should be configurable using ENV variables. ENV variables is the way we are configuring the apps when we run them in our infrastructure. Here is an example how all the parameters are moved in ENV variables: https://github.com/santiment/sanbase2/blob/master/config/config.exs#L39
 * __Data migrations__ - Each project should contain DB migrations describing how the schema of the data changes as the service is developed. There should be 2 main scripts around data migrations:
   * db-setup - Setup a brand new DB with the latest state of the schema and import some example seed data - used for easily setup a new instance of the service. In order to do this you need to keep the latest schema in the repository.
   * db-migrate - Run the migrations which are not yet run on the current DB. This is going to be run every time the service is deployed, to make sure the DB schema is up to date
