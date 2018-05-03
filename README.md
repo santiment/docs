@@ -11,7 +11,7 @@ The santiment platform is language and data storage agnostic. You can develop ba
 * __Data migrations__ - Each project should contain DB migrations describing how the schema of the data changes as the service is developed. There should be 2 main scripts around data migrations:
   * db-setup - Setup a brand new DB with the latest state of the schema and import some example seed data - used for easily setup a new instance of the service. In order to do this you need to keep the latest schema in the repository.
   * db-migrate - Run the migrations which are not yet run on the current DB. This is going to be run every time the service is deployed, to make sure the DB schema is up to date
-* __Buildable in jenkins__ - Each service shold provide a `Jenkinsfile` file, which describes how the project build is done. The build should run unit tests on the code and make sure all automatic checks are passing and if they do, build a docker image and push it to a central registry. You can see an example `Jenkinsfile` here: https://github.com/santiment/sanbase2/blob/master/Jenkinsfile
+* __Buildable in jenkins__ - Each service should provide a `Jenkinsfile` file, which describes how the project build is done. The build should run unit tests on the code and make sure all automatic checks are passing and if they do, build a docker image and push it to a central registry. You can see an example `Jenkinsfile` here: https://github.com/santiment/sanbase2/blob/master/Jenkinsfile
 * __STDOUT logging__ - Each service should be logging on the standard output, so that the platform can capture the logs and forward them to a standard log collection service
 
 ### Example NodeJS application
